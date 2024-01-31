@@ -1,0 +1,1 @@
+("8.7" tarm64osx ("4bd107726b9ac0b48984e24cf3f8656cf2ca13e3" . "cd63f63c6f59053514735f55ae3a62b56735bea6") #"/Users/josiahlewis/Downloads/quiz2/syntax-procs.rkt" (collects #"drracket" #"private" #"drracket-errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt") (collects #"rackunit" #"main.rkt"))

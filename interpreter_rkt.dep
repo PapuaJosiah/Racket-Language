@@ -1,0 +1,1 @@
+("8.7" tarm64osx ("6090b13fda6fde08e728c90f6ad1f8acdc61e3e9" . "2a82e24aaa87058853f6a864c1214c65c420da77") #"/Users/josiahlewis/Downloads/boom-v1 2/syntax-procs.rkt" #"/Users/josiahlewis/Downloads/boom-v1 2/utilities.rkt" (collects #"drracket" #"private" #"drracket-errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))

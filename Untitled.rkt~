@@ -1,0 +1,15 @@
+#lang racket
+import "syntax_procs.rkt"
+
+(define lexical-address
+  (lambda exp
+    (cond ((lambda? exp)
+      ;work
+           ))))
+
+
+
+(define address-finder
+  (lambda (var exp depth)
+    ;do shit
+    ))

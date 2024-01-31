@@ -1,0 +1,124 @@
+;;  ------------------------------------------------------------------------
+;; |   FILE           :  homework08.rkt                                     |
+;; |   AUTHOR         :  Eugene Wallingford                                 |
+;; |   CREATION DATE  :  2023/03/29                                         |
+;; |   DESCRIPTION    :  a preprocessor for our little language, now with   |
+;; |                     if expressions, and static analysis functions      |
+;; |                     that analyze programs in the core language         |
+;;  ------------------------------------------------------------------------
+;; |   AUTHOR         :  YOUR NAME HERE                                     |
+;; |   DATE           :  2023/xx/xx                                         |
+;; |   DESCRIPTION    :  DESCRIBE YOUR CHANGES FOR HOMEWORK 8               |
+;;  ------------------------------------------------------------------------
+
+#lang racket
+(require "syntax-procs.rkt")
+(require "set-adt.rkt")
+(provide (all-defined-out))   ; exports every function defined in the file
+
+;;  ------------------------------------------------------------------------
+;;   This code works with the following grammar:
+;;
+;;                       --------------------------- CORE FEATURES
+;;        <exp>      ::= <varref>
+;;                     | ( lambda ( <var>* ) <exp> )
+;;                     | ( <exp> <exp>* )
+;;                     | ( if <exp> <exp> <exp> )
+;;                       --------------------------- ABSTRACTIONS
+;;                     | ( let (<var> <exp>) <exp> )
+;;                     | ( and <exp> <exp> )         -- new
+;;                     | ( or <exp> <exp> )          -- new
+;;  ------------------------------------------------------------------------
+
+;; --------------------------------------------------------------------------
+;; preprocess :: full-exp -> core-exp
+;; --------------------------------------------------------------------------
+
+(define preprocess
+  (lambda (exp)
+    (cond
+      ;
+      ; preprocess features in core language
+      ;
+      ( (varref? exp) (make-varref exp) )
+      ( (lambda? exp)
+           (make-lambda (lambda->params exp)
+                        (preprocess (lambda->body exp))) )
+      ( (app? exp)
+           (make-app (preprocess (app->proc exp))
+                     (map preprocess (app->args exp))) )
+      ( (if? exp)
+           (make-if (preprocess (if->test exp))
+                    (preprocess (if->then exp))
+                    (preprocess (if->else exp))) )
+      ;
+      ; preprocess abstractions into core language
+      ;
+      ( (let? exp)
+           (let ((var  (let->var  exp))
+                 (val  (let->val  exp))
+                 (body (let->body exp)))
+             (make-app (make-lambda (list var) (preprocess body))
+                       (list (preprocess val)))) )
+      ( else (error 'preprocess? "invalid exp ~a" exp)))))
+
+;; --------------------------------------------------------------------------
+;; functions that analyze expressions in the core language
+;; --------------------------------------------------------------------------
+
+;; (is-declared? v core-exp) -> boolean
+
+   ;; REPLACE THIS LINE WITH YOUR FUNCTION
+
+;; (occurs-bound? v core-exp) -> boolean
+
+(define occurs-bound?
+  (lambda (s exp)
+    (cond ((varref? exp) #f)
+          ((lambda? exp) (or (occurs-bound? s (lambda->body exp))
+                             (and (member s (lambda->params exp))
+                                  (occurs-free? s (lambda->body exp)))))
+          ((app? exp)    (or (occurs-bound? s (app->proc exp))
+                             (ormap (lambda (arg)
+                                      (occurs-bound? s arg))
+                                    (app->args exp))))
+          ((if? exp)     (or (occurs-bound? s (if->test exp))
+                             (occurs-bound? s (if->then exp))
+                             (occurs-bound? s (if->else exp))))
+          (else (error 'occurs-bound? "invalid exp ~a" exp)))))
+
+;; (occurs-free? v core-exp) -> boolean
+
+(define occurs-free?
+  (lambda (s exp)
+    (cond ((varref? exp) (eq? s exp))
+          ((lambda? exp) (and (not (member s (lambda->params exp)))
+                              (occurs-free? s (lambda->body exp))))
+          ((app? exp)    (or (occurs-free? s (app->proc exp))
+                             (ormap (lambda (arg)
+                                      (occurs-free? s arg))
+                                    (app->args exp))))
+          ((if? exp)     (or (occurs-free? s (if->test exp))
+                             (occurs-free? s (if->then exp))
+                             (occurs-free? s (if->else exp))))
+          (else (error 'occurs-free? "invalid exp ~a" exp)))))
+
+;; (free-vars core-exp) -> set
+
+(define free-vars
+  (lambda (exp)
+    (cond ((varref? exp)
+              (set exp) )
+          ((lambda? exp)
+              (set-minus (free-vars (lambda->body exp))
+                         (lambda->params exp)) )
+          ((app? exp)
+               (set-union (free-vars (app->proc exp))
+                          (set-union-all (map free-vars (app->args exp)))))
+          ((if? exp)
+              (set-union (free-vars (if->test exp))
+                         (set-union (free-vars (if->then exp))
+                                    (free-vars (if->else exp)))) )
+          (else (error 'free-vars "invalid exp ~a" exp)))))
+
+;; --------------------------------------------------------------------------

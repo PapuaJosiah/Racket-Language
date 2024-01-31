@@ -1,0 +1,1 @@
+("8.7" tarm64osx ("2cf29c58b036e038c0790f6193db1e8954a6e01a" . "5c2519255dcac9e2d0d569edee3d426f1ec93547") #"/Users/josiahlewis/Downloads/hw06/occurs-procs.rkt" #"/Users/josiahlewis/Downloads/hw06/syntax-procs.rkt" (collects #"drracket" #"private" #"drracket-errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))

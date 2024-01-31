@@ -1,0 +1,70 @@
+;;  ------------------------------------------------------------------------
+;; |   FILE           :  homework07.rkt                                     |
+;; |   AUTHOR         :  [ YOUR NAME ]                                      |
+;; |   CREATION DATE  :  [ YOUR DATE ]                                      |
+;; |   DESCRIPTION    :  [ YOUR COMMENT ]                                   |
+;;  ------------------------------------------------------------------------
+
+#lang racket
+(require "syntax-procs.rkt")
+(require "language-procs.rkt")
+(provide curry
+         empty-set   set-empty?   set-member?   set-add
+         set-union
+         set-subset?
+         free-vars
+)
+
+;; --------------------------------------------------------------------------
+;; Problem 1                                           (structural recursion)
+;; --------------------------------------------------------------------------
+
+(define curry
+  (lambda (lambda-exp)
+    'fill-in-the-blank))
+
+;; --------------------------------------------------------------------------
+;; Problem 2                                        (non-recursive solutions)
+;; --------------------------------------------------------------------------
+
+(define empty-set
+  (lambda ()
+    'fill-in-the-blank))
+
+(define set-empty?
+  (lambda (S)
+    'fill-in-the-blank))
+
+(define set-member?
+  (lambda (sym S)
+    'fill-in-the-blank))
+
+(define set-add
+  (lambda (sym S)
+    'fill-in-the-blank))
+
+;; --------------------------------------------------------------------------
+;; Problem 3                                           (structural recursion)
+;; --------------------------------------------------------------------------
+
+(define set-union
+  (lambda (S1 S2)
+    'fill-in-the-blank))
+
+;; --------------------------------------------------------------------------
+;; Problem 4                                           (structural recursion)
+;; --------------------------------------------------------------------------
+
+(define set-subset?
+  (lambda (S1 S2)
+    'fill-in-the-blank))
+
+;; --------------------------------------------------------------------------
+;; Problem 5                                           (structural recursion)
+;; --------------------------------------------------------------------------
+
+(define free-vars
+  (lambda (exp)
+    'fill-in-the-blank))
+
+;; --------------------------------------------------------------------------

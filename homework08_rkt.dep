@@ -1,0 +1,1 @@
+("8.7" tarm64osx ("035b6cf71493bf912a4ec0b74e696d6261c87d96" . "b169cae72262cbf844e9d804c5fbea01d8fe116e") #"/Users/josiahlewis/Downloads/hw08/set-adt.rkt" #"/Users/josiahlewis/Downloads/hw08/syntax-procs.rkt" (collects #"drracket" #"private" #"drracket-errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))
